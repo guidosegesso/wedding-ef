@@ -1,2 +1,0 @@
-{"timestamp":"2025-11-09T03:11:25.017Z","nombre":"Martha Graciela","email":"marthagiovannetti@yahoo.com.ar","vasAPoderVenir":"Sí","cantidadAcompanantes":"1","comentarios":"-"}
-{"timestamp":"2025-11-09T03:14:52.278Z","nombre":"RODOLFO ALFREDO","email":"guidosegesso@gmail.com","vasAPoderVenir":"Sí","cantidadAcompanantes":"2","comentarios":"soy un carlitos"}
