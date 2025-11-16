@@ -96,6 +96,31 @@ function DynamicField({ field }) {
   );
 }
 
+function OpenGoogleMaps() {
+  const dest = encodeURIComponent(
+    (content.modals.map.destination || "").toString()
+  );
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const origin = encodeURIComponent(
+          `${pos.coords.latitude},${pos.coords.longitude}`
+        );
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=driving`;
+        window.open(url, "_blank", "noopener");
+      },
+      () => {
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=driving`;
+        window.open(url, "_blank", "noopener");
+      },
+      { maximumAge: 600000, timeout: 5000 }
+    );
+  } else {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=driving`;
+    window.open(url, "_blank", "noopener");
+  }
+}
+
 export default function WeddingPage() {
   const [open, setOpen] = useState(null); // 'rsvp' | 'map' | 'bank'
   const [submitting, setSubmitting] = useState(false);
@@ -119,43 +144,92 @@ export default function WeddingPage() {
     []
   );
 
+  const normalizeHeroImageSrc = () => {
+    const raw = content.hero?.image?.src || "";
+    if (!raw) return "";
+    if (raw.startsWith("@/")) {
+      const withoutAlias = raw.replace(/^@\/+/, "");
+      if (withoutAlias.startsWith("assets/images/")) {
+        return `/images/${withoutAlias.replace("assets/images/", "")}`;
+      }
+      return `/${withoutAlias}`;
+    }
+    return raw;
+  };
+
+  const heroImageSrc = normalizeHeroImageSrc();
+  const heroImageAlt = content.hero?.image?.alt || "Imagen principal";
+  const cuandoYDonde = content.hero?.cuandoYdonde || {};
+  const bendicion = content.hero?.bendicion;  
+  const fechaLine = cuandoYDonde.fecha + ", " + cuandoYDonde.hora;
+  const lugarLine = cuandoYDonde.lugar;
+  const localidadLine = cuandoYDonde.localidad;
+  const bendicionTexto = bendicion.text;
+  const bendicionHora = bendicion.hora;
+  const invite = content.hero?.invite;
+
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center px-4 bg-primary text-on-primary"
       style={brandStyles}
     >
-      <main className="mx-auto flex w-full max-w-xl sm:max-w-2xl flex-col items-center gap-6 text-center py-12 sm:py-16">
-        <p className="italic opacity-90">“{content.hero.tag}”</p>
-        <p className="italic text-lg sm:text-xl">{content.hero.dateTime}</p>
-        <h1 className="text-3xl sm:text-5xl italic font-semibold leading-tight">“{content.hero.title}”</h1>
-        <p className="italic opacity-90">“{content.hero.invite}”</p>
+      <main className="mx-auto flex w-full max-w-xl sm:max-w-2xl flex-col items-center text-center">
+        <div className="titulo1">“{content.hero.tag}”</div>
 
-        <Pill onClick={() => setOpen("rsvp")} ariaLabel={content.buttons.rsvp}>
-          {content.buttons.rsvp}
-        </Pill>
+        <div className="titulo2">
+          <div className="titulo2-text">“{content.hero.title}”</div>
+        </div>
 
-        <p className="italic opacity-90">“{content.hero.summerNote}”</p>
+        <div className="imagen">
+          {heroImageSrc ? (
+            <img src={heroImageSrc} alt={heroImageAlt} className="imagen-foto" />
+          ) : null}
+        </div>
 
-        <Pill as="div" disabled ariaLabel="Vestimenta">
-          <div className="flex flex-col items-center leading-tight">
-            <div className="text-xs sm:text-sm opacity-80 tracking-wide uppercase">
-              {content.buttons.dressTitle}
-            </div>
-            <div className="text-base sm:text-lg">{content.buttons.dressValue}</div>
+        <div className="cuandoYdonde space-y-1">
+          <div className="cuandoYdonde-fecha">{fechaLine}</div>
+          <div className="cuandoYdonde-lugar-localidad">
+            <span className="cuandoYdonde-lugar">{lugarLine}</span>
+            <span className="cuandoYdonde-localidad">{localidadLine}</span>
           </div>
-        </Pill>
+        </div>
 
-        <p className="italic opacity-90">“{content.hero.mapNote}”</p>
+        <div className="bendicion space-y-1">
+          <div className="bendicion-descripcion">“{bendicionTexto}”</div>
+          <div className="bendicion-hora">{bendicionHora}</div>
+        </div>
+        <div className="invitacion">
+          “{invite}”
+        </div>
 
-        <Pill onClick={() => setOpen("map")} ariaLabel={content.buttons.map}>
-          {content.buttons.map}
-        </Pill>
+        <div className="asistencia">
+          <Pill onClick={() => setOpen("rsvp")} ariaLabel={content.buttons.rsvp}>
+            {content.buttons.rsvp}
+          </Pill>
+        </div>
 
-        <p className="italic opacity-90">“{content.hero.giftNote}”</p>
+        <div className="vestimenta space-y-1">
+          <div className="vestimenta-titulo">
+            {content.buttons.dressTitle}
+          </div>
+          <div className="vestimenta-valor">
+            {content.buttons.dressValue}
+          </div>
+        </div>
 
-        <Pill onClick={() => setOpen("bank")} ariaLabel={content.buttons.bank}>
-          {content.buttons.bank}
-        </Pill>
+        <div className="mapa">
+          <div className="mapa-text">“{content.hero.mapNote}”</div>
+          <Pill onClick={() => OpenGoogleMaps()} ariaLabel={content.buttons.map}>
+            {content.buttons.map}
+          </Pill>
+        </div>
+
+        <div className="regalo">
+          <div className="regalo-text">“{content.hero.giftNote}”</div>
+          <Pill onClick={() => setOpen("bank")} ariaLabel={content.buttons.bank}>
+            {content.buttons.bank}
+          </Pill>
+        </div>
       </main>
 
       {/* RSVP Modal */}
@@ -286,28 +360,7 @@ export default function WeddingPage() {
           <button
             className="btn px-4 py-2"
             onClick={() => {
-              const dest = encodeURIComponent(
-                (content.modals.map.destination || "").toString()
-              );
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                  (pos) => {
-                    const origin = encodeURIComponent(
-                      `${pos.coords.latitude},${pos.coords.longitude}`
-                    );
-                    const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=driving`;
-                    window.open(url, "_blank", "noopener");
-                  },
-                  () => {
-                    const url = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=driving`;
-                    window.open(url, "_blank", "noopener");
-                  },
-                  { maximumAge: 600000, timeout: 5000 }
-                );
-              } else {
-                const url = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=driving`;
-                window.open(url, "_blank", "noopener");
-              }
+              OpenGoogleMaps();
             }}
           >
             Cómo llegar

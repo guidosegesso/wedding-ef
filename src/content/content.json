@@ -3,22 +3,37 @@
     "orange": "#ef8d06"
   },
   "typography": {
-    "primaryFont": "MinionVariableConcept, Georgia, 'Times New Roman', serif"
+    "primaryFont": "'MinionPro', Georgia, 'Times New Roman', serif"
   },
   "hero": {
     "tag": "el primer gran evento del año",
-    "dateTime": "Sábado 24 de enero 2026, 18:30 hs",
-    "title": "Se casan Flor & Egui",
+    "title": "Se casan Egui & Flor",
+    "image":{
+      "src": "@/assets/images/anillos.png",
+      "alt": "anillos"
+    },
+    "cuandoYdonde": {
+      "fecha": "Sábado 24 de enero 2026",
+      "hora": "18:30 hs",
+      "lugar": "Quinta “El Capricho”",
+      "localidad": "El Cazador, Escobar"
+    },
+    "bendicion": {
+      "text": "Bendición de anillos",
+      "hora": "19:30 hs"
+    },
     "invite": "Nos gustaría que nos puedas acompañar",
+
+    "dateTime": "Sábado 24 de enero 2026, 18:30 hs",
     "summerNote": "será en verano...de nochecita...",
     "mapNote": "Para que puedas llegar sin inconvenientes...",
-    "giftNote": "Si nos queres hacer un regalo, podés colaborar con nuestra luna de miel..."
+    "giftNote": "Tu granito de arena será bienvenido"
   },
   "buttons": {
     "rsvp": "Confirmar Asistencia",
     "dressTitle": "DRESS CODE:",
     "dressValue": "Elegante Sport",
-    "map": "Ver Mapa",
+    "map": "Link Google Maps",
     "bank": "DATOS BANCARIOS"
   },
   "modals": {
@@ -28,10 +43,10 @@
       "submit": "Enviar",
       "fields": [
         { "type": "text", "name": "nombre", "label": "Nombre y apellido", "required": true },
-        { "type": "email", "name": "email", "label": "Email", "required": true },
+        
         { "type": "select", "name": "asistencia", "label": "¿Vas a poder venir?", "required": true, "options": ["Sí", "No", "A confirmar"] },
-        { "type": "number", "name": "acompanantes", "label": "Cantidad de acompañantes", "min": 0, "max": 10, "step": 1 },
-        { "type": "textarea", "name": "notas", "label": "Comentarios / restricciones alimentarias" }
+        
+        { "type": "textarea", "name": "notas", "label": "Comentarios" }
       ]
     },
     "map": {
@@ -43,10 +58,10 @@
     "bank": {
       "title": "Datos bancarios",
       "text": "Si deseás colaborar con nuestra luna de miel, te dejamos nuestros datos:",
-      "cbu": "0000000000000000000000",
-      "alias": "ALIAS.EJEMPLO",
-      "holder": "Nombre Apellido",
-      "bankName": "Banco Ejemplo"
+      "cbu": "0000003100019942686887",
+      "alias": "EGUI-FLOR.MP",
+      "holder": "Maria Florencia Zavalia",
+      "bankName": "MERCADO PAGO"
     }
   }
 }

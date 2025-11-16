@@ -5,9 +5,9 @@
   --foreground: #171717;
 
   /* Palette */
-  --color-primary: #ef8d06; /* naranja principal */
-  --color-secondary: #000000; /* negro para botones */
-  --color-secondary-hover: #1a1a1a;
+  --color-naranja: #ef8d06; /* naranja principal */
+  --color-negro: #000000; /* negro para botones */
+  --color-negro-hover: #1a1a1a;
   --color-on-primary: #ffffff;
   --color-on-secondary: #ffffff;
   --color-surface: #ffffff; /* tarjetas / modales */
@@ -35,56 +35,113 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "MinionPro", Georgia, "Times New Roman", serif;
 }
 
-/* Optional: local Minion Variable Concept font.
-   Drop your font file at public/fonts/MinionVariableConcept.woff2 to enable. */
+/* Minion Pro family served from public/fonts */
 @font-face {
-  font-family: "MinionVariableConcept";
-  src: url("/fonts/MinionVariableConcept.woff2") format("woff2-variations"),
-       url("/fonts/MinionVariableConcept.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal italic;
+  font-family: "MinionPro";
+  src: url("/fonts/MinionPro-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MinionPro";
+  src: url("/fonts/MinionPro-It.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MinionPro";
+  src: url("/fonts/MinionPro-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MinionPro";
+  src: url("/fonts/MinionPro-MediumIt.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MinionPro";
+  src: url("/fonts/MinionPro-Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MinionPro";
+  src: url("/fonts/MinionPro-SemiboldIt.otf") format("opentype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MinionPro";
+  src: url("/fonts/MinionPro-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MinionPro";
+  src: url("/fonts/MinionPro-BoldIt.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
   font-display: swap;
 }
 
 /* Utility classes bound to variables */
-.bg-primary { background-color: var(--color-primary); }
-.bg-secondary { background-color: var(--color-secondary); }
+/* Fondo naranja de la pantalla principal en WeddingPage */
+.bg-primary { background-color: var(--color-naranja); }
+/* Fondo oscuro usado sobre todo dentro de los botones tipo etiqueta */
+.bg-secondary { background-color: var(--color-negro); }
+/* Fondo claro aplicado en tarjetas/modales (contenedor Modal) */
 .bg-surface { background-color: var(--color-surface); }
 
+/* Texto blanco sobre el fondo principal del layout */
 .text-on-primary { color: var(--color-on-primary); }
+/* Texto sobre los botones secundarios .btn /.pill */
 .text-on-secondary { color: var(--color-on-secondary); }
+/* Texto en superficies claras como los modales */
 .text-on-surface { color: var(--color-on-surface); }
 
+/* Overlay semitransparente que usa el componente Modal */
 .modal-backdrop { background-color: var(--color-overlay); }
 
+/* Botones tipo pastilla del componente <Pill> en la cabecera y acciones */
 .pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-pill);
-  background: var(--color-secondary);
+  background: var(--color-negro);
   color: var(--color-on-secondary);
   box-shadow: 0 1px 2px rgba(0,0,0,.2);
   transition: background-color .2s ease;
 }
-.pill:not(.is-disabled):hover { background: var(--color-secondary-hover); }
+.pill:not(.is-disabled):hover { background: var(--color-negro-hover); }
 .pill[disabled], .pill.is-disabled { opacity: .95; cursor: default; }
 .pill.is-disabled { pointer-events: none; }
-.pill:focus-visible { outline: 2px solid var(--color-secondary); outline-offset: 2px; }
+.pill:focus-visible { outline: 2px solid var(--color-negro); outline-offset: 2px; }
 
+/* Botón genérico usado en formularios/modales (ej. enviar RSVP, cerrar) */
 .btn {
-  background: var(--color-secondary);
+  background: var(--color-negro);
   color: var(--color-on-secondary);
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
 }
-.btn:hover { background: var(--color-secondary-hover); }
+.btn:hover { background: var(--color-negro-hover); }
 
 /* Icon button for copy actions */
+/* Botones cuadrados para copiar CBU/Alias en el modal de regalos */
 .icon-btn {
   display: inline-flex;
   align-items: center;
@@ -93,10 +150,11 @@ body {
   height: 2rem;
   border-radius: 0.5rem;
   background: #00000000;
-  color: var(--color-secondary);
+  color: var(--color-negro);
   transition: background-color .2s ease;
 }
-.icon-btn:hover { background: var(--color-secondary-hover); }
+.icon-btn:hover { background: var(--color-negro-hover); }
+/* Ícono SVG dentro del botón copiar de los datos bancarios */
 .copy-svg{
     color: black;
 }
@@ -104,10 +162,13 @@ body {
     color: white;
 }
 /* Copy rows layout to avoid overlap */
+/* Filas de datos (CBU/Alias) dentro del modal bancario */
 .copy-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .5rem; }
+/* Texto que contiene el número/alais en esas filas */
 .copy-text { overflow-wrap: anywhere; }
 
 /* Map embed sizing controlled via media queries */
+/* Contenedor del iframe de Google Maps dentro del modal de mapa */
 .map-embed {
   width: 100%;
   height: 280px; /* default */
@@ -117,4 +178,140 @@ body {
 }
 @media (min-width: 1080px) {
   .map-embed { height: 400px; }
+}
+
+/* ---------- Hero typography blocks on WeddingPage ---------- */
+/* Frase introductoria superior */
+.titulo1 {
+  font-size: 25px;
+  font-style: italic;
+  color: var(--color-on-primary);
+  /* opacity: 0.9; */
+}
+/* Contenedor del título principal */
+.titulo2 {
+  width: 100%;
+}
+/* Texto principal “Se casan...” */
+.titulo2-text {
+   margin: 0;
+  font-size: 45px;
+  font-weight: 600;
+  color: var(--color-negro);
+
+  line-height: 1.15;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+@media (max-width: 430px) {
+  .titulo2-text {
+    font-size: 35px;
+    letter-spacing: 0.04em;
+  }
+}
+/* Imagen de portada */
+.imagen {
+  width: 100%;
+  margin: 17px 25px 25px 25px;
+}
+.imagen-foto {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Bloque “Cuándo y dónde” */
+.cuandoYdonde { 
+  width: 100%; 
+}
+.cuandoYdonde-fecha {
+  font-size: 25px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-on-primary);
+}
+.cuandoYdonde-lugar-localidad{
+  display: flex;
+  flex-direction: column;
+}
+.cuandoYdonde-lugar {
+  margin-top: 15px;
+  font-size: 25px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-negro);
+  line-height: 0.7;
+  opacity: 1;
+}
+.cuandoYdonde-localidad {
+  font-size: 25px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-negro);
+  opacity: 1;
+}
+
+/* Bloque “Bendición de anillos” */
+.bendicion-descripcion {
+  color: var(--color-on-primary);
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 100;  
+  line-height: 0.5;
+}
+.bendicion-hora {
+  color: var(--color-on-primary);
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 100;  
+  line-height: 0.5;
+}
+
+/* Mensaje de invitación general. Nos gustaria que nos puedas acompañar... */
+.invitacion {
+  margin-top: 25px;
+  font-size: 18px;
+  
+  /* font-style: italic; */
+  color: var(--color-on-primary);
+  /* opacity: 0.9; */
+}
+
+.asistencia{
+  margin: 5px 0 10px 0 ;
+}
+
+/* Dress code */
+.vestimenta { 
+  margin: 5px 0 15px 0 ;
+  width: 100%; 
+}
+.vestimenta-titulo {
+  color: var(--color-on-primary);
+  font-size: 16px;
+  letter-spacing: 1;
+  text-transform: uppercase;
+  line-height: 0.7;
+}
+.vestimenta-valor {
+  color: var(--color-negro);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* Texto previo al botón del mapa. Para que puedas llegar.... */
+.mapa{
+  margin-bottom: 15px;
+}
+.mapa-text {
+  color: var(--color-on-primary);
+  margin: 5px 0 10px 0;
+  font-size: 18px;
+}
+
+/* Nota previa al botón de regalo/datos bancarios */
+.regalo-text {
+  color: var(--color-on-primary);
+  font-size: 18px;
+  margin: 5px 0 10px 0;
 }
