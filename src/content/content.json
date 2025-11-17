@@ -53,7 +53,8 @@
       "title": "Mapa",
       "embedUrl": "https://www.google.com/maps?q=Sta.%20Teresita%203425%2C%20B1625%20Bel%C3%A9n%20de%20Escobar%2C%20Provincia%20de%20Buenos%20Aires&z=16&output=embed",
       "destination": "Sta. Teresita 3425, B1625 Belén de Escobar, Provincia de Buenos Aires",
-      "note": "Tocá el botón para abrir la ruta en Google Maps."
+      "note": "Tocá el botón para abrir la ruta en Google Maps.",
+      "useCurrentLocation": false
     },
     "bank": {
       "title": "Datos bancarios",

@@ -97,9 +97,20 @@ function DynamicField({ field }) {
 }
 
 function OpenGoogleMaps() {
-  const dest = encodeURIComponent(
-    (content.modals.map.destination || "").toString()
-  );
+  const destination = (content.modals.map.destination || "").toString();
+  const dest = encodeURIComponent(destination);
+  const useCurrentLocation = Boolean(content.modals.map.useCurrentLocation);
+
+  const openLocationOnly = () => {
+    const url = `https://www.google.com/maps/search/?api=1&query=${dest}`;
+    window.open(url, "_blank", "noopener");
+  };
+
+  if (!useCurrentLocation) {
+    openLocationOnly();
+    return;
+  }
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -110,14 +121,12 @@ function OpenGoogleMaps() {
         window.open(url, "_blank", "noopener");
       },
       () => {
-        const url = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=driving`;
-        window.open(url, "_blank", "noopener");
+        openLocationOnly();
       },
       { maximumAge: 600000, timeout: 5000 }
     );
   } else {
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=driving`;
-    window.open(url, "_blank", "noopener");
+    openLocationOnly();
   }
 }
 
